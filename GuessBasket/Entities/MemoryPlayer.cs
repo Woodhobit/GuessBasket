@@ -13,19 +13,16 @@ namespace GuessBasket.Entities
     {
         private List<int> previousAttempts;
 
-        public MemoryPlayer(Game game, string name): base(game, name)
+        public MemoryPlayer(): base()
         {
-            this.previousAttempts = new List<int>();
+            this.previousAttempts= new List<int>();
         }
 
         protected override int GenerateNumber()
         {
-            var number = StaticRandom.Rand(this.game.MinWeight, this.game.MaxWeight);
-            while (this.previousAttempts.Contains(number))
-            {
-                number = StaticRandom.Rand(this.game.MinWeight, this.game.MaxWeight);
-            }
-
+            var range = Enumerable.Range(this.game.MinWeight, this.game.MaxWeight).Where(i => !this.previousAttempts.Contains(i));
+            int index = StaticRandom.Rand(this.game.MinWeight, this.game.MaxWeight - this.previousAttempts.Count);
+            var number = range.ElementAt(index);
             this.previousAttempts.Add(number);
             return number;
         }

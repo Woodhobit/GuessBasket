@@ -15,12 +15,6 @@ namespace GuessBasket.Core
 
         protected Game game;
 
-        protected Player(Game game, string name)
-        {
-            this.game = game;
-            this.Name = name;
-        }
-
         public void Play(CancellationToken cancelToken)
         {
             var isGuessed = false;
@@ -43,6 +37,11 @@ namespace GuessBasket.Core
                 var delay = Math.Abs(this.game.MaxAttempts - number) * 10;
                 Thread.Sleep(delay);
             }
+        }
+
+        public void ConnectToGame(Game game)
+        {
+            this.game = game;
         }
 
         protected abstract int GenerateNumber();

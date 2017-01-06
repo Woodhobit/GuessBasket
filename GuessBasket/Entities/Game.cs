@@ -38,29 +38,28 @@ namespace GuessBasket.Entities
 
         public Game()
         {
-            this.MaxWeight = 140;
-            this.MinWeight = 40;
-            this.magicNumber = StaticRandom.Rand(this.MinWeight, this.MaxWeight);
-            this.MaxAttempts = 100;
-            this.time = 1500;
+            this.MaxWeight = Configuration.MaxWeight;
+            this.MinWeight = Configuration.MinWeight;
+            this.MaxAttempts = Configuration.MaxAttempts;
+            this.time = Configuration.TimeForGame;
 
+            this.magicNumber = StaticRandom.Rand(this.MinWeight, this.MaxWeight);
             this.locked = new object();
 
             this.PreviousAttempts = new ConcurrentDictionary<int, Player>();
-
             this.cancellationTokenSource = new CancellationTokenSource();
-
             this.players = new List<Player>();
         }
 
         public void AddPlayer(Player player)
         {
+            player.ConnectToGame(this);
             this.players.Add(player);
         }
 
         public void Start()
         {
-            Console.WriteLine(string.Format("The real weight of the basket - {0}", this.magicNumber));
+            Console.WriteLine($"The real weight of the basket - {this.magicNumber}");
 
             this.IsGuessed = false;
             var count = this.players.Count;
@@ -119,7 +118,7 @@ namespace GuessBasket.Entities
                 }
                 else
                 {
-                    Console.WriteLine(string.Format("The player {0} is WINNER!!! Total amount of attempts in the game : {1}", this.winner.Name, this.attempts));
+                    Console.WriteLine($"The player {this.winner.Name} is WINNER!!! Total amount of attempts in the game : {this.attempts}");
                 }
             }
         }
@@ -128,7 +127,7 @@ namespace GuessBasket.Entities
         {
             var closest = this.PreviousAttempts.Aggregate((x, y) => Math.Abs(x.Key - this.magicNumber) < Math.Abs(y.Key - this.magicNumber) ? x : y);
             Console.WriteLine("Here are not winner!");
-            Console.WriteLine(string.Format("Closest player is - {0}. His guess is - {1}", closest.Value.Name, closest.Key));
+            Console.WriteLine($"Closest player is - {closest.Value.Name}. His guess is - {closest.Key}");
         }
     }
 }

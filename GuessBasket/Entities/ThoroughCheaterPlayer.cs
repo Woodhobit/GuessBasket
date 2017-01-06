@@ -12,9 +12,9 @@ namespace GuessBasket.Entities
     {
         private int currentNumber;
 
-        public ThoroughCheaterPlayer(Game game, string name) : base(game, name)
+        public ThoroughCheaterPlayer(int minWeight) : base()
         {
-            this.currentNumber = this.game.MinWeight;
+            this.currentNumber = minWeight;
         }
 
         protected override int GenerateNumber()

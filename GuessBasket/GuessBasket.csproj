@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Entities\CheaterPlayer.cs" />
     <Compile Include="Entities\Game.cs" />
@@ -50,6 +51,8 @@
     <Compile Include="Entities\RandomPlayer.cs" />
     <Compile Include="Entities\ThoroughCheaterPlayer.cs" />
     <Compile Include="Entities\ThoroughPlayer.cs" />
+    <Compile Include="Enums\PlayerType.cs" />
+    <Compile Include="Helper\PlayersGenerator.cs" />
     <Compile Include="Helper\StaticRandom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

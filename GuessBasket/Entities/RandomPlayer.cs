@@ -11,10 +11,6 @@ namespace GuessBasket.Entities
 {
     class RandomPlayer : Player
     {
-        public RandomPlayer(Game game, string name) : base(game, name)
-        {
-        }
-
         protected override int GenerateNumber()
         {
             return StaticRandom.Rand(this.game.MinWeight, this.game.MaxWeight);

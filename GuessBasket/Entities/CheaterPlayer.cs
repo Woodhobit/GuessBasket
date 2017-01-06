@@ -11,19 +11,11 @@ namespace GuessBasket.Entities
 {
     public class CheaterPlayer : Player
     {
-        public CheaterPlayer(Game game, string name) : base(game, name)
-        {
-        }
-
         protected override int GenerateNumber()
         {
-            var number = StaticRandom.Rand(this.game.MinWeight, this.game.MaxWeight);
-            while (this.game.PreviousAttempts.ContainsKey(number))
-            {
-                number = StaticRandom.Rand(this.game.MinWeight, this.game.MaxWeight);
-            }
-
-            return number;
+            var range = Enumerable.Range(this.game.MinWeight, this.game.MaxWeight).Where(i => !this.game.PreviousAttempts.Keys.Contains(i));
+            int index = StaticRandom.Rand(this.game.MinWeight, this.game.MaxWeight - this.game.PreviousAttempts.Keys.Count);
+            return range.ElementAt(index);
         }
     }
 }
